@@ -1,10 +1,11 @@
 import React from 'react';
+import { FaBeer } from 'react-icons/fa';
 
 const Header: React.FC = () => {
   return (
     <header>
       <div className="logo">
-        {/* Your logo here */}
+        <FaBeer />
       </div>
       <nav>
         <ul>
@@ -14,11 +15,12 @@ const Header: React.FC = () => {
           <li>
             <a href="/movies">Movies</a>
           </li>
-          {/* Add other navigation links as needed */}
+          
         </ul>
       </nav>
       <div className="user-profile">
-        {/* User profile or login/logout buttons here */}
+        <a href="/auth/register">SignUp</a>
+        <a href="/auth/login">LogIn</a>
       </div>
     </header>
   );
