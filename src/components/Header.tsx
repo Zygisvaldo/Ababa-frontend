@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SportsBarIcon from '@mui/icons-material/SportsBar';
 import { Link } from 'react-router-dom';
-
+import { useAuth } from '../contexts/AuthContext'
 
 const pages = [
   { path: '/', label: 'Home' },
@@ -23,6 +23,7 @@ const pages = [
 const settings = [{ path: '/auth', label: 'Log In' }];
 
 function ResponsiveAppBar() {
+  const { token, logout } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -100,6 +101,7 @@ function ResponsiveAppBar() {
                   </Link>
                 </MenuItem>
               ))}
+              
             </Menu>
           </Box>
           <SportsBarIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -136,7 +138,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar />
               </IconButton>
             </Tooltip>
             <Menu
@@ -154,14 +156,20 @@ function ResponsiveAppBar() {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
-                  <Link to={setting.path} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <Typography textAlign="center">{setting.label}</Typography>
-                  </Link>
+            > 
+              {token ? (
+                <MenuItem onClick={() => { handleCloseUserMenu(); logout(); }}>
+                  <Typography textAlign="center">Log out</Typography>
                 </MenuItem>
-              ))}
+              ) : (
+                settings.map((setting) => (
+                  <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                    <Link to={setting.path} style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <Typography textAlign="center">{setting.label}</Typography>
+                    </Link>
+                  </MenuItem>
+                ))
+              )}
             </Menu>
           </Box>
         </Toolbar>

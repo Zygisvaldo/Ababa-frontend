@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import  Login  from '../components/AuthPage/LoginForm';
-import  SignUp  from '../components/AuthPage/SignupForm';
-
+import  AuthForm  from '../components/AuthPage/AuthForm';
 
 export const AuthPage: React.FC = () => {
   
   const [isLogin, setIsLogin] = useState(true);
 
+  const switchToLogin = () => {
+    setIsLogin(true);
+  };
+
   return (
-    <div >
+    <div>
+      {isLogin ? <AuthForm isLogin={isLogin} switchToLogin={switchToLogin} /> : <AuthForm isLogin={isLogin} switchToLogin={switchToLogin} />}
       <button onClick={() => setIsLogin(!isLogin)}>
         {isLogin ? 'Switch to SignUp' : 'Switch to Login'}
       </button>
-      {isLogin ? <Login /> : <SignUp />}
     </div>
   );
 };
