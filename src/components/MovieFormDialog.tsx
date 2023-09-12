@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Movie } from '../types';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,15 +7,28 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-interface EditMovieDialogProps {
+interface MovieFormDialogProps {
   open: boolean;
   onClose: () => void;
   movie: Movie;
   onSave: (editedMovie: Movie) => void;
+  isCreate: boolean;
 }
 
-const EditMovieDialog: React.FC<EditMovieDialogProps> = ({ open, onClose, movie, onSave }) => {
-  const [editedMovie, setEditedMovie] = useState<Movie>({ ...movie }); // Initialize with the current movie data
+const MovieFormDialog: React.FC<MovieFormDialogProps> = ({
+  open,
+  onClose,
+  movie,
+  onSave,
+  isCreate,
+}) => {
+  const [editedMovie, setEditedMovie] = useState<Movie>({ ...movie });
+  const maxTitleCharacters = 25;
+  const maxDescriptionCharacters = 150;
+
+  useEffect(() => {
+    setEditedMovie({ ...movie });
+  }, [movie]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditedMovie({ ...editedMovie, title: event.target.value });
@@ -31,15 +44,20 @@ const EditMovieDialog: React.FC<EditMovieDialogProps> = ({ open, onClose, movie,
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" sx={{ '& .MuiDialog-paper': { minWidth: '400px', minHeight: '400px' } }}>
-      <DialogTitle>Edit Movie</DialogTitle>
-      <DialogContent>
+    <Dialog open={open} onClose={onClose} maxWidth="md">
+      <DialogTitle>{isCreate ? 'Create Movie' : 'Edit Movie'}</DialogTitle>
+      <DialogContent >
         <TextField
           fullWidth
           label="Title"
           value={editedMovie.title}
           onChange={handleTitleChange}
           sx={{ my: 2 }}
+          InputProps={{
+            inputProps: {
+              maxLength: maxTitleCharacters,
+            },
+          }}
         />
         <TextField
           fullWidth
@@ -49,6 +67,11 @@ const EditMovieDialog: React.FC<EditMovieDialogProps> = ({ open, onClose, movie,
           multiline
           rows={4}
           sx={{ my: 2 }}
+          InputProps={{
+            inputProps: {
+              maxLength: maxDescriptionCharacters,
+            },
+          }}
         />
       </DialogContent>
       <DialogActions>
@@ -56,11 +79,11 @@ const EditMovieDialog: React.FC<EditMovieDialogProps> = ({ open, onClose, movie,
           Close
         </Button>
         <Button onClick={handleSave} color="primary">
-          Save
+          {isCreate ? 'Create' : 'Save'}
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default EditMovieDialog;
+export default MovieFormDialog;

@@ -3,10 +3,10 @@ import { Movie } from '../types';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog '
-import { deleteMovieById, updateMovieById } from '../api';
+import { deleteMovieById, updateMovieById, createMovie } from '../api';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import EditMovieDialog from './EditMovieDialog';
+import MovieFormDialog from './MovieFormDialog';
 
 interface MovieCardProps {
   movie: Movie;
@@ -72,13 +72,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         onClose={handleCloseDialog}
         onConfirmDelete={handleConfirmDelete}
       />
-      <EditMovieDialog
+      <MovieFormDialog
         open={editDialogOpen}
         onClose={handleCloseDialog}
         movie={movie}
         onSave={(editedMovie) => {
-          handleConfirmEdit(editedMovie)
+          handleConfirmEdit(editedMovie);
         }}
+        isCreate={!movie.id}
       />
     </div>
   );

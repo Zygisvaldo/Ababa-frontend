@@ -48,3 +48,20 @@ Promise<void> => {
     throw error;
   }
 };
+
+export const createMovie = async (updatedMovie: Movie):
+Promise<void> => {
+  const { title, description } = {...updatedMovie}
+  const body = { title, description }
+  try {
+    const token = getToken();
+    await axios.post(`${baseURL}/movies/`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.error(`Error creating movie:`, error);
+    throw error;
+  }
+};

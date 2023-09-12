@@ -36,7 +36,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = (newToken: string) => {
     setToken(newToken);
-    navigate('/movies');
+    navigate('/');
     console.log(newToken)
     setIsAuthenticated(true);
   };
