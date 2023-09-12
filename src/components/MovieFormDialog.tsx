@@ -23,8 +23,8 @@ const MovieFormDialog: React.FC<MovieFormDialogProps> = ({
   isCreate,
 }) => {
   const [editedMovie, setEditedMovie] = useState<Movie>({ ...movie });
-  const maxTitleCharacters = 25;
-  const maxDescriptionCharacters = 150;
+  const maxTitleCharacters = 50;
+  const maxDescriptionCharacters = 175;
 
   useEffect(() => {
     setEditedMovie({ ...movie });
