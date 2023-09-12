@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import MovieList from '../components/MovieList';
+import MovieTable from '../components/MovieTable'
 
 const HomePage: React.FC = () => {
   const [movies, setMovies] = useState([]);
@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/movies'); // Adjust the URL as necessary
+        const response = await axios.get('http://localhost:3000/movies');
         setMovies(response.data);
       } catch (error) {
         console.error('Error fetching movies:', error);
@@ -20,8 +20,8 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <h1>Movie Page</h1>
-      <MovieList movies={movies} />
+      <h1>Movie Page with table component</h1>
+      <MovieTable movies={movies} />
     </div>
   );
 };

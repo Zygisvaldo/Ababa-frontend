@@ -26,6 +26,16 @@ interface Data {
   title: string;
 }
 
+interface Movie {
+  title: string;
+  description: string | number;
+  id: number;
+}
+
+interface MovieTableProps {
+  movies: Movie[];
+}
+
 function createData(
   title: string,
   description: string,
@@ -36,12 +46,6 @@ function createData(
     description,
   };
 }
-
-const rows = [
-  createData('Cupcake', '1'),
-  createData('Donut', '2'),
-  createData('Eclair', '3'),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -94,13 +98,13 @@ const headCells: readonly HeadCell[] = [
   {
     id: 'title',
     numeric: false,
-    disablePadding: false,
+    disablePadding: true,
     label: 'Title',
   },
   {
     id: 'description',
     numeric: false,
-    disablePadding: false,
+    disablePadding: true,
     label: 'Description',
   }
 ];
@@ -215,13 +219,33 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     </Toolbar>
   );
 }
-
-export default function EnhancedTable() {
+  
+export default function EnhancedTable({ movies }: MovieTableProps) {
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('description');
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // const [movies, setMovies] = useState<Movie[]>([]);
+
+  /* useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/movies');
+        setMovies(response.data);
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+
+    fetchMovies();
+  }, []); */
+
+  const createData = (title: string, description: string | number, id: number) => {
+    return { title, description, id };
+  };
+  
+  const rows = movies.length ? movies.map(movie => createData(movie.title, movie.description, movie.id)) : [];
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
