@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import  AuthForm  from '../components/AuthPage/AuthForm';
+import { Button, Card, CardContent } from '@mui/material';
+import SimpleContainer from '../components/PageContainer'
 
 export const AuthPage: React.FC = () => {
   
@@ -9,12 +11,20 @@ export const AuthPage: React.FC = () => {
     setIsLogin(true);
   };
 
+  const switchToSignUp = () => {
+    setIsLogin(false);
+  };
+
   return (
-    <div>
-      {isLogin ? <AuthForm isLogin={isLogin} switchToLogin={switchToLogin} /> : <AuthForm isLogin={isLogin} switchToLogin={switchToLogin} />}
-      <button onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? 'Switch to SignUp' : 'Switch to Login'}
-      </button>
-    </div>
+    <SimpleContainer>
+      <Card variant="outlined">
+        <CardContent>
+          <AuthForm isLogin={isLogin} switchToLogin={switchToLogin} />
+        </CardContent>
+      </Card>
+      <Button variant="outlined" onClick={isLogin ? switchToSignUp : switchToLogin}>
+            {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
+          </Button>
+    </SimpleContainer>
   );
 };

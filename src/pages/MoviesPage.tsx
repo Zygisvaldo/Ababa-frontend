@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import MovieTable from '../components/MovieTable'
 import CircularProgress from '@mui/material/CircularProgress';
+import { fetchAllMovies } from '../api';
+import { Movie } from '../types';
+import SimpleContainer from '../components/PageContainer'
 
 const HomePage: React.FC = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/movies');
-        setMovies(response.data);
+        const moviesData  = await fetchAllMovies();
+        setMovies(moviesData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching movies:', error);
@@ -22,14 +24,14 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <SimpleContainer>
       <h1>Movie Page with table component</h1>
       {loading ? (
       <CircularProgress />
       ) : (
         <MovieTable movies={movies} />
       )}
-    </div>
+    </SimpleContainer>
   );
 };
 

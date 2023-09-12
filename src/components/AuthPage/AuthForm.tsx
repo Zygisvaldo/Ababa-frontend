@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../contexts/AuthContext';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import { Alert, Button, Stack, TextField } from '@mui/material';
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -45,25 +44,42 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, switchToLogin  }) => {
     }
   };
 
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError('');
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError('');
+    setPassword(e.target.value);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Stack sx={{ width: '100%', marginTop: 2 }} spacing={2}>
         {error && <Alert severity="error">{error}</Alert>}
         {success && <Alert severity="success">{success}</Alert>}
       </Stack>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
+      <Stack sx={{ width: '100%', marginTop: 2 }} spacing={2}>
+        <TextField
+          label="Username"
+          variant="outlined"
+          
+          value={username}
+          onChange={handleUsernameChange}
+        />
+        <TextField
+          type="password"
+          label="Password"
+          variant="outlined"
+          
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <Button variant="contained" type="submit" fullWidth>
+          {isLogin ? 'Login' : 'Sign Up'}
+        </Button>
+      </Stack>
     </form>
   );
 };
