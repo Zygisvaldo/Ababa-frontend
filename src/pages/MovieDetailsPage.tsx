@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import MovieCard from '../components/MovieCard';
 
 interface Movie {
   id: number;
@@ -31,8 +32,7 @@ const MovieDetails: React.FC = () => {
 
   return (
     <div>
-      <p>{movie.title}</p>
-      <p>{movie.description}</p>
+      <MovieCard movie={movie} />
     </div>
   );
 };

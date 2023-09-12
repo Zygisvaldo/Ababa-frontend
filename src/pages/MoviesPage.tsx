@@ -4,12 +4,14 @@ import MovieTable from '../components/MovieTable'
 
 const HomePage: React.FC = () => {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const response = await axios.get('http://localhost:3000/movies');
         setMovies(response.data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
@@ -21,7 +23,11 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <h1>Movie Page with table component</h1>
-      <MovieTable movies={movies} />
+      {loading ? (
+      <p>Loading...</p>
+      ) : (
+        <MovieTable movies={movies} />
+      )}
     </div>
   );
 };
