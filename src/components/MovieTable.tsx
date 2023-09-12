@@ -27,17 +27,6 @@ interface MovieTableProps {
   movies: Movie[];
 }
 
-function createData(
-  title: string,
-  description: string,
-
-): Data {
-  return {
-    title,
-    description,
-  };
-}
-
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -97,15 +86,14 @@ const headCells: readonly HeadCell[] = [
 ];
 
 interface EnhancedTableProps {
-  numSelected: number;
+  
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
   order: Order;
   orderBy: string;
-  rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  const { order, orderBy, numSelected, rowCount, onRequestSort } =
+  const { order, orderBy, onRequestSort } =
     props;
   const createSortHandler =
     (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -153,7 +141,9 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
     return { title, description, id };
   };
   
-  const rows = movies.length ? movies.map(movie => createData(movie.title, movie.description, movie.id)) : [];
+  const rows = React.useMemo(() => {
+    return movies.length ? movies.map(movie => createData(movie.title, movie.description, movie.id)) : [];
+  }, [movies]);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -182,7 +172,7 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage],
+    [order, orderBy, page, rowsPerPage, rows],
   );
 
   return (
@@ -196,8 +186,6 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
             size={'medium'}
           >
             <EnhancedTableHead
-              numSelected={rows.length}
-              rowCount={rows.length}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}

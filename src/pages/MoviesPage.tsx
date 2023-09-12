@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieTable from '../components/MovieTable'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const HomePage: React.FC = () => {
   const [movies, setMovies] = useState([]);
@@ -24,7 +25,7 @@ const HomePage: React.FC = () => {
     <div>
       <h1>Movie Page with table component</h1>
       {loading ? (
-      <p>Loading...</p>
+      <CircularProgress />
       ) : (
         <MovieTable movies={movies} />
       )}
