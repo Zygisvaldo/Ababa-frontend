@@ -1,20 +1,21 @@
 Frontend side of the favMovies application
 
-## Available Scripts
+Build using React and TypeScript
 
-In the project directory, you can run:
+## Running the project
 
-0. (Optional) To run development build.
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+0. To install dependencies
+### `npm install`
 
 1. To build the project 
 ### `npm run build`
 
-2. To run the project
+2. To run the frontend app
 ### `serve -s build -l 3001`
+
+
+## Running development build
+### `npm start`
+
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
+
