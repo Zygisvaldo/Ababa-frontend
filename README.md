@@ -1,6 +1,6 @@
 # Frontend side of the favMovies application
 
-#### Build using React and TypeScript
+Build using React and TypeScript
 
 ## Running the project
 
