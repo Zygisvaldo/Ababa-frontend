@@ -129,6 +129,10 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searchQuery, setSearchQuery] = useState('');
 
+  React.useEffect(() => {
+    setPage(0);
+  }, [searchQuery]);
+
   const createData = (title: string, description: string, id: number) => {
     return { title, description, id };
   };
@@ -200,33 +204,37 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
               onRequestSort={handleRequestSort}
             />
             <TableBody>
-              {visibleRows.map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
+              {filteredRows.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center">
+                    No matches found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                visibleRows.map((row, index) => {
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                return (
-                  <TableRow key={row.id}>
-                    <TableCell>
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      <Link to={`/movies/${row.id}`}>
-                        {row.title}
-                      </Link>
-                    </TableCell>
-                    <TableCell align="left">{row.description}</TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow key={row.id}>
+                      <TableCell>
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                      >
+                        <Link to={`/movies/${row.id}`}>
+                          {row.title}
+                        </Link>
+                      </TableCell>
+                      <TableCell align="left">{row.description}</TableCell>
+                    </TableRow>
+                  );
+                })
+              )}
               {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (53) * emptyRows,
-                  }}
-                >
+                <TableRow style={{ height: (53) * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
