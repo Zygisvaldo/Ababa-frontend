@@ -8,6 +8,7 @@ interface SimpleContainerProps {
 
 const containerStyle = {
   marginTop: '20px',
+  paddingBottom: '56px'
 };
 
 export default function SimpleContainer({ children }: SimpleContainerProps) {

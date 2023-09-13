@@ -1,14 +1,5 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Paper from '@mui/material/Paper';
+import React, { useState } from 'react';
+import { TextField, Paper, TableSortLabel, TableRow, TablePagination, TableHead, TableContainer, TableCell, TableBody, Table, Box } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Link } from 'react-router-dom';
 
@@ -19,7 +10,7 @@ interface Data {
 
 interface Movie {
   title: string;
-  description: string | number;
+  description: string;
   id: number;
 }
 
@@ -136,10 +127,12 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
   const [orderBy, setOrderBy] = React.useState<keyof Data>('description');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const createData = (title: string, description: string | number, id: number) => {
+  const createData = (title: string, description: string, id: number) => {
     return { title, description, id };
   };
+  
   
   const rows = React.useMemo(() => {
     return movies.length ? movies.map(movie => createData(movie.title, movie.description, movie.id)) : [];
@@ -166,19 +159,35 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const filteredRows = React.useMemo(() => {
+    return rows.filter((row) =>
+      row.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      row.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [rows, searchQuery]);
+  
   const visibleRows = React.useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
+      stableSort(filteredRows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage, rows],
+    [order, orderBy, page, rowsPerPage, filteredRows],
   );
 
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+  const totalCount = filteredRows.length;
 
+  return (
+    
+    <Box sx={{ width: '100%' }}>
+      <TextField
+          label="Search"
+          fullWidth
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ my: 2, mr: 2 }}
+        />
+      <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -227,7 +236,7 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={totalCount}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
