@@ -43,3 +43,20 @@
 .footer {
   flex-shrink: 0;
 }
+
+.textBlock {
+  background-color: white;
+  border-radius: 4px;
+  opacity: 0.9;
+  padding: 10px;
+}
+
+.outlinedButtonBlock {
+  background-color: white;
+  border-radius: 4px;
+  opacity: 0.9;
+  padding: 10px;
+  max-width: 200px;
+  margin: 0 auto;
+  text-align: center;
+}

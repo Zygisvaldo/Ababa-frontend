@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { Movie } from '../types';
+import { Movie } from '../../types';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog '
-import { deleteMovieById, updateMovieById, createMovie } from '../api';
+import { deleteMovieById, updateMovieById, createMovie } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import MovieFormDialog from './MovieFormDialog';
 import { Alert, Button, Stack} from '@mui/material';
+import { Link } from 'react-router-dom';
 
 interface MovieCardProps {
   movie: Movie;
@@ -66,7 +67,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       </Stack>
       <h2>{movie.title}</h2>
       <p>{movie.description}</p>
-      {isAuthenticated && (
+      {isAuthenticated ? (
         <Stack spacing={2} direction="row" sx={{ justifyContent: 'center' }}>
           <Button variant="contained" onClick={handleEdit}>
             Edit
@@ -75,6 +76,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             Delete
           </Button>
         </Stack>
+      ) : (
+        <p>
+          Please <Link to="/auth">log in</Link> to use CRUD functionalities.
+        </p>
       )}
       <DeleteConfirmationDialog
         open={dialogOpen}

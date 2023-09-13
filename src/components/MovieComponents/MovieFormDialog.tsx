@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Movie } from '../types';
+import { Movie } from '../../types';
 import { Alert, Button, Stack, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 interface MovieFormDialogProps {

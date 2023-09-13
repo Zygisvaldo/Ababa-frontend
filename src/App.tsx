@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './styles/App.css';
-import ResponsiveAppBar from './components/Header';
-import Footer from './components/Footer';
+import ResponsiveAppBar from './components/Shared/Header';
+import Footer from './components/Shared/Footer';
 import HomePage from './pages/HomePage';
 import MoviesPage from './pages/MoviesPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import { AuthPage } from './pages/AuthPage';
 import AuthProvider from './contexts/AuthContext';
-import SimpleContainer from './components/PageContainer'
+import SimpleContainer from './components/Shared/PageContainer'
 
 function App() {
   return (

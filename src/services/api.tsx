@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Movie } from './types';
+import { Movie } from '../types';
 import { createNamedExports } from 'typescript';
 
 const baseURL = 'http://localhost:3000';

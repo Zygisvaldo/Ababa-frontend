@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import MovieTable from '../components/MovieTable'
+import MovieTable from '../components/MovieComponents/MovieTable'
 import CircularProgress from '@mui/material/CircularProgress';
-import { fetchAllMovies } from '../api';
+import { fetchAllMovies } from '../services/api';
 import { Movie } from '../types';
-import SimpleContainer from '../components/PageContainer'
-import CreateMovieButton from '../components/CreateMovieButton';
+import SimpleContainer from '../components/Shared/PageContainer'
+import CreateMovieButton from '../components/MovieComponents/CreateMovieButton';
 import { AuthContext } from '../contexts/AuthContext';
 
 const HomePage: React.FC = () => {
@@ -28,7 +28,6 @@ const HomePage: React.FC = () => {
 
   return (
     <SimpleContainer>
-      <h1>Movie Page with table component</h1>
       {isAuthenticated ? (
         <>
         <div style={{ marginBottom: '20px' }}>
@@ -36,7 +35,9 @@ const HomePage: React.FC = () => {
         </div>
       </>
       ) : (
-        <p>Please log in to use CRUD for movies.</p>
+        <h1 style={{
+          color: 'white'
+        }}>Please log in to use CRUD for movies.</h1>
       )}
       
       {loading ? (

@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SportsBarIcon from '@mui/icons-material/SportsBar';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 
 const pages = [
   { path: '/', label: 'Home' },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import  AuthForm  from '../components/AuthPage/AuthForm';
 import { Button, Card, CardContent } from '@mui/material';
-import SimpleContainer from '../components/PageContainer'
+import SimpleContainer from '../components/Shared/PageContainer'
 
 export const AuthPage: React.FC = () => {
   
@@ -22,9 +22,11 @@ export const AuthPage: React.FC = () => {
           <AuthForm isLogin={isLogin} switchToLogin={switchToLogin} />
         </CardContent>
       </Card>
-      <Button variant="outlined" onClick={isLogin ? switchToSignUp : switchToLogin}>
-            {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
-          </Button>
+      <div className="outlinedButtonBlock">
+        <Button variant="outlined" onClick={isLogin ? switchToSignUp : switchToLogin}>
+              {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
+        </Button>
+      </div>
     </SimpleContainer>
   );
 };

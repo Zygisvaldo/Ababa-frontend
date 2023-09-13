@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Movie } from '../types';
+import { Movie } from '../../types';
 import MovieFormDialog from './MovieFormDialog';
-import { createMovie } from '../api';
+import { createMovie } from '../../services/api';
 import { Alert, Button, Stack} from '@mui/material';
 
 interface CreateMovieButtonProps {

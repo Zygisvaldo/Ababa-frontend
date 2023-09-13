@@ -189,7 +189,10 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
           fullWidth
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          sx={{ my: 2, mr: 2 }}
+          sx={{ my: 2, mr: 2, backgroundColor: 'white',
+          borderRadius: '4px',
+          opacity: '0.9', 
+         }}
         />
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
@@ -223,6 +226,7 @@ export default function EnhancedTable({ movies }: MovieTableProps) {
                         id={labelId}
                         scope="row"
                         padding="none"
+                        style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 200, maxHeight: 50 }}
                       >
                         <Link to={`/movies/${row.id}`}>
                           {row.title}

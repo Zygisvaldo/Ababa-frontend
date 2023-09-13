@@ -7,10 +7,10 @@ const HomePage: React.FC = () => {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <div>
+    <div className="textBlock">
       <h1>Home Page</h1>
       {isAuthenticated ? (
-        <p>Welcome! You are logged in. Navigate to{' '}
+        <p>Welcome! You are logged in! Navigate to{' '}
         <Link to="/movies">Movies</Link> and use CRUD.
       </p>
       ) : (
