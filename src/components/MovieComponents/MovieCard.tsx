@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Movie } from '../../types';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog '
-import { deleteMovieById, updateMovieById, createMovie } from '../../services/api';
+import { deleteMovieById, updateMovieById } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import MovieFormDialog from './MovieFormDialog';
