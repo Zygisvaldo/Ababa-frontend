@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Movie } from '../types';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog '
 import { deleteMovieById, updateMovieById, createMovie } from '../api';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import MovieFormDialog from './MovieFormDialog';
+import { Alert, Button, Stack} from '@mui/material';
 
 interface MovieCardProps {
   movie: Movie;
@@ -18,6 +17,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const navigate = useNavigate();
+  const [success, setSuccess] = useState('');
 
   const handleEdit = () => {
     setEditDialogOpen(true);
@@ -30,7 +30,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const handleConfirmDelete = async () => {
     try {
       await deleteMovieById(movie.id);
-      navigate('/movies');
+      setSuccess('Movie deleted successfully! Reloading...')
+      setTimeout(() => {
+        navigate('/movies');
+      }, 1500);
     } catch (error) {
       console.error('Error deleting movie:', error);
     }
@@ -41,7 +44,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     console.log('Edited movie:', editedMovie);
     try {
       await updateMovieById(editedMovie.id, editedMovie);
-      window.location.reload();
+      setSuccess('Movie updated successfully! Reloading...')
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
       console.error('Error deleting movie:', error);
     }
@@ -55,6 +61,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
   return (
     <div>
+      <Stack sx={{ width: '100%', marginTop: 2 }} spacing={2}>
+        {success && <Alert severity="success">{success}</Alert>}
+      </Stack>
       <h2>{movie.title}</h2>
       <p>{movie.description}</p>
       {isAuthenticated && (

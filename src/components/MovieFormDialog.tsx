@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Movie } from '../types';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { Alert, Button, Stack, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 interface MovieFormDialogProps {
   open: boolean;
@@ -23,6 +18,7 @@ const MovieFormDialog: React.FC<MovieFormDialogProps> = ({
   isCreate,
 }) => {
   const [editedMovie, setEditedMovie] = useState<Movie>({ ...movie });
+  const [error, setError] = useState('');
   const maxTitleCharacters = 50;
   const maxDescriptionCharacters = 175;
 
@@ -39,6 +35,10 @@ const MovieFormDialog: React.FC<MovieFormDialogProps> = ({
   };
 
   const handleSave = () => {
+    if (!editedMovie.title.trim() || !editedMovie.description.trim()) {
+      setError('Both title and description are required');
+      return;
+    }
     onSave(editedMovie);
     onClose();
   };
@@ -47,6 +47,9 @@ const MovieFormDialog: React.FC<MovieFormDialogProps> = ({
     <Dialog open={open} onClose={onClose} maxWidth="md">
       <DialogTitle>{isCreate ? 'Create Movie' : 'Edit Movie'}</DialogTitle>
       <DialogContent >
+        <Stack sx={{ width: '100%', marginTop: 2 }} spacing={2}>
+          {error && <Alert severity="error">{error}</Alert>}
+        </Stack>
         <TextField
           fullWidth
           label="Title"
