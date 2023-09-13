@@ -8,6 +8,7 @@ import MoviesPage from './pages/MoviesPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import { AuthPage } from './pages/AuthPage';
 import AuthProvider from './contexts/AuthContext';
+import SimpleContainer from './components/PageContainer'
 
 function App() {
   return (
@@ -15,12 +16,14 @@ function App() {
       <AuthProvider>
         <div className="App">
           <ResponsiveAppBar />
-          <Routes>
-            <Route path="/" element={<HomePage/>} />
-            <Route path="/movies" element={<MoviesPage />} />
-            <Route path="/movies/:id" element={<MovieDetailsPage />} />
-            <Route path="/auth" element={<AuthPage />} />
-          </Routes>
+            <SimpleContainer>
+              <Routes>
+                <Route path="/" element={<HomePage/>} />
+                <Route path="/movies" element={<MoviesPage />} />
+                <Route path="/movies/:id" element={<MovieDetailsPage />} />
+                <Route path="/auth" element={<AuthPage />} />
+              </Routes>
+            </SimpleContainer>
           <Footer />
         </div>
       </AuthProvider>
